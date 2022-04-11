@@ -1,0 +1,95 @@
+﻿@model AdminCreateMovieModel
+@* <form action="/movies/create" method="post" autocomplete="on"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+<form asp-controller="MovieAdminPanel" asp-action="CreateMovie" method="post" autocomplete="on" enctype="multipart/form-data">
+
+    <div class="row" style="width: 60rem;">
+        <!--GÜNCELLEME TABLOSU-->
+        <div class="col-md-8">
+
+            <div class="d-flex justify-content-center mb-2 mt-2">
+                <div class="ctext-muted shadow p-2 bg-white rounded ml-6 mr-6 mt-1 " style="width: 40rem;">
+                    <h3>Film Ekleme Formu</h3>
+                    <hr />
+
+                    <div class="text-danger" asp-validation-summary="All"></div>
+
+                    <div class="mb-3">
+                        @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                        <label asp-for="Title"></label>
+                        @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                        <input asp-for="Title" class="form-control"> @*Value değerini yazmasak da tag helper ilgili değeri getiriyor aslında. *@
+                        <span asp-validation-for="Title" class="text-danger"></span> @*tag helper sayesinde validasyon mesajları buraya yazılır.*@
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description"></label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Director"></label>
+                        <input asp-for="Director" class="form-control" />
+                        <span asp-validation-for="Director" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label>Bir film kapak resmi seçiniz:</label>
+                        <input type="file" name="fileImg" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="MovieEmbededVideoLink"></label>
+                        <input asp-for="MovieEmbededVideoLink" class="form-control">
+                        <span asp-validation-for="MovieEmbededVideoLink" class="text-danger"></span>
+                    </div>
+
+
+                    <button class="btn btn-dark">Ekle</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!--KATEGORİLER-->
+        <div class="col-md-4">
+            <div class="d-flex justify-content-center mb-2 mt-2">
+                <div class="ctext-muted shadow p-2 bg-white rounded ml-6 mr-6 mt-1 " style="width: 20rem;">
+                    @foreach (var genre in (List<Genre>)ViewBag.Genres)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="GenreIds"
+                                   value="@genre.GenreId"
+                                   id="genre_@genre.GenreId"
+                                   @(Model.GenreIds != null && Model.GenreIds.Any(g => g == genre.GenreId) ? "checked" : "")>
+                            <label class="form-check-label" for="genre_@genre.GenreId">
+                                @genre.Name
+                            </label>
+                        </div>
+                    }
+                    <span asp-validation-for="GenreIds" class="text-danger"></span>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+@section scripts
+{
+    <script src="https://cdn.ckeditor.com/4.17.2/basic/ckeditor.js"></script>
+    @*<script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>*@
+    @*<script src="https://cdn.ckeditor.com/4.17.2/full-all/ckeditor.js"></script>*@
+   <script>
+        CKEDITOR.replace('Description'); @*Bu fonksiyon yukarıda bulunan Description isimli text areayı CK HTML editor ile değiştirir.*@
+    </script>
+
+
+        @* Aşağıdaki scriptler realtime validasyonlar yapmak için gereklidir. Jquery kütüphanesi de gerekli bunların çalışması için. _Layout içerisinde zeten JQuery de sayfaya eklenmiştir.
+        Bu scriptleri Validasyonlarda Remote validasyon Attribute'unu kullanmak için çağırdık. Böylece Title doldurulurken böyle bir film daha önce kaydedilmişse POST etmeden bizi uyaracak.'*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}

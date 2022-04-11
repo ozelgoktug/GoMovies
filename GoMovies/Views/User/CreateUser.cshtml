@@ -1,0 +1,65 @@
+﻿@model UserSignUpViewModel
+
+<div class="d-flex justify-content-center mb-2 mt-2">
+
+    <div class="ctext-muted shadow p-2 bg-white rounded ml-6 mr-6 mt-1 " style="width: 40rem;">
+        @* <form action="/movies/create" method="post" autocomplete="on"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+        <form asp-controller="User" asp-action="CreateUser" method="post" autocomplete="on">
+            <div class="text-danger" asp-validation-summary="All"></div>
+
+            <h3>Kullanıcı Kayıt Formu</h3>
+            <hr />
+            <div class="mb-3">
+                @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <label asp-for="Name"></label>
+                @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <input asp-for="Name" class="form-control">
+            </div>
+            <div class="mb-3">
+                @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <label asp-for="Surname"></label>
+                @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <input asp-for="Surname" class="form-control">
+            </div>
+            <div class="mb-3">
+                @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <label asp-for="Mail"></label>
+                @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <input asp-for="Mail" class="form-control">
+            </div>
+            <div class="mb-3">
+                @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <label asp-for="UserName"></label>
+                @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <input asp-for="UserName" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+            </div>
+
+            @for (int i = 0; i < Model.RoleListModel.Count; i++)
+            {
+                <div class="form-check mb-2">
+                    <input type="hidden" asp-for="@Model.RoleListModel[i].RoleID" value="@Model.RoleListModel[i].RoleID" />
+                    <input type="hidden" asp-for="@Model.RoleListModel[i].Name" value="@Model.RoleListModel[i].Name" />
+                    <input type="checkbox" asp-for="@Model.RoleListModel[i].IsRoleAlreadyAssignedToUser" class="form-check-input" />
+                    <label class="form-check-label" for="@Model.RoleListModel[i].IsRoleAlreadyAssignedToUser">@Model.RoleListModel[i].Name</label>
+                </div>
+            }
+
+            <div class="mb-3">
+                <button class="btn btn-dark">Kayıt Ol</button>
+            </div>
+
+        </form>
+
+
+
+    </div>
+
+</div>

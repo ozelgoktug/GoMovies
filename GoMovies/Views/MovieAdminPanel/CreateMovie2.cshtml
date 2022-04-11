@@ -1,0 +1,51 @@
+﻿@model Movie
+<div class="d-flex justify-content-center mb-2 mt-2">
+
+    <div class="ctext-muted shadow p-2 bg-white rounded ml-6 mr-6 mt-1 " style="width: 40rem;">
+        @* <form action="/movies/create" method="post" autocomplete="on"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+        <form asp-controller="MovieAdminPanel" asp-action="CreateMovie2" method="post" autocomplete="on">
+            <h3>Film Ekleme Formu</h3>
+            <hr />
+            <div class="mb-3">
+                @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <label asp-for="Title"></label>
+                @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <input asp-for="Title" class="form-control">
+                <span asp-validation-for="Title" class="text-danger"></span> @*tag helper sayesinde validasyon mesajları buraya yazılır.*@
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Director"></label>
+                <input asp-for="Director" class="form-control" />
+                <span asp-validation-for="Director" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="imageUrl"></label>
+                <input asp-for="imageUrl" class="form-control" />
+                <span asp-validation-for="imageUrl" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="MovieEmbededVideoLink"></label>
+                <input asp-for="MovieEmbededVideoLink" class="form-control" /> <p>https://www.youtube.com/embed/</p>
+                <span asp-validation-for="MovieEmbededVideoLink" class="text-danger"></span>
+            </div>
+            
+            <!--<div class="form-group">
+                <label asp-for="GenreId"></label>
+                <select asp-for="GenreId" asp-items="@ViewBag.Genres" class="form-control">-->
+                    @*Bu tür bilgilerini daha farklı getirdiğimiz
+                yöntemi updateMovie.cshmtl'de görebilirsin'*@
+                    <!--<option selected disabled>Seçiniz</option>
+                </select>
+                <span asp-validation-for="GenreId" class="text-danger"></span>
+            </div>-->
+
+            <button class="btn btn-dark">Ekle</button>
+
+        </form>
+    </div>
+</div>

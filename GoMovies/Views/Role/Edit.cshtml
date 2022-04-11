@@ -1,0 +1,35 @@
+﻿@model RoleEditModel
+
+<div class="d-flex justify-content-center mb-2 mt-2">
+
+    <div class="ctext-muted shadow p-2 bg-white rounded ml-6 mr-6 mt-1 " style="width: 40rem;">
+        @* <form action="/movies/create" method="post" autocomplete="on"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+        <form asp-controller="Role" asp-action="Edit" method="post" autocomplete="on">
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <h3>Rol Güncelleme Formu</h3>
+            <hr />
+            <div class="mb-3">
+                @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <label asp-for="UserName"></label>
+                @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <input asp-for="UserName" class="form-control">
+            </div>
+            <div class="mb-3">
+                @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <label asp-for="RoleName"></label>
+                @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <input asp-for="RoleName" class="form-control">
+            </div>
+           
+            <div class="mb-3">
+                <button class="btn btn-dark">Güncelle</button>
+            </div>
+
+
+        </form>
+
+
+
+    </div>
+
+</div>

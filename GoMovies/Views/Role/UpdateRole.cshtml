@@ -1,0 +1,36 @@
+﻿@model RoleUpdateViewModel
+<h1>Rol Güncelle</h1>
+
+
+<div class="d-flex justify-content-center mb-2 mt-2">
+
+    <div class="ctext-muted shadow p-2 bg-white rounded ml-6 mr-6 mt-1 " style="width: 40rem;">
+        <form asp-controller="Role" asp-action="UpdateRole" method="post" autocomplete="on">
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <h3>Rol Güncelleme Formu</h3>
+            <hr />
+            <div class="mb-3">
+                <label  asp-for="@Model.Id "></label>
+                <input  asp-for="@Model.Id" class="form-control" disabled>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Name "></label>
+                <input asp-for="@Model.Name" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-dark">Güncelle</button>
+            </div>
+
+
+        </form>
+
+
+
+    </div>
+
+</div>
+
+
+
+

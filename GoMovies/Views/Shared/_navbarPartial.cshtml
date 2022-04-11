@@ -1,0 +1,55 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <a class="navbar-brand" href="/home/index"><strong>GoMovies</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/home/index">Ana Sayfa <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/movies/list">Film Listesi</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Kategoriler
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Aksiyon</a>
+                    <a class="dropdown-item" href="#">Bilim Kurgu</a>
+                    <a class="dropdown-item" href="#">Fantastik</a>
+                    <a class="dropdown-item" href="#">Romantik</a>
+                    <a class="dropdown-item" href="#">Gersilim</a>
+                    <a class="dropdown-item" href="#">Animasyon</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Diğer...</a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/home/about">Hakkımızda</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/MovieAdminPanel/create">Film Ekle</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/MovieAdminPanel/ListForEditing">Film Güncelle</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Abonelere Özel</a>
+            </li>
+
+        </ul>
+        <form action="/movies/list" method="get" class="form-inline my-2 my-lg-0">
+            <input type="text" class="form-control mr-sm-2" name="q" placeholder="Film ara..." aria-label="Search">
+            <button type="submit" class="btn btn-outline-light my-2 my-sm-0">Search</button>
+            &nbsp;
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Giriş yap</button>
+        </form>
+    </div>
+</nav>

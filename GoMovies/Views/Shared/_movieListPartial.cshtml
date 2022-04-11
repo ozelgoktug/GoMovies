@@ -1,0 +1,43 @@
+﻿@model Movie
+@*Buradaki modeli Home/index.cshtml ve Movies/Movie.cshtml içerisinden alıyoruz.
+    İlgili viewlerden buraa gönderilen Movie türündeki modeli kullanıyoruz yani.*@
+
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src="/img/@Model.imageUrl" class="card-img" alt="@Model.Title">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Title</h5>
+
+                @if (Model.Description == null)
+                {
+                    Model.Description = "";
+                }
+                //eğer yorum değeri  140'dan fazla karaktere sahipse ve null değilse ve içinde =dan fazla boşluk varsa(yani birden fazla kelime varsa
+                else if (Model.Description.Length > 140 && Model.Description != null && Model.Description.Substring(0, 140).LastIndexOf(" ") > 0)
+                {
+                    <p class="card-text">
+                        @Html.Raw(Model.Description.Substring(0, Model.Description.Substring(0, 140).LastIndexOf(" ")))...
+                    </p>
+
+                }
+                else if (Model.Description != null && Model.Description.Length < 140)
+                {
+                    <p class="card-text">
+                        @Html.Raw(Model.Description)
+                    </p>
+                }
+
+
+                <p class="card-text text-muted">Yönetmen: @Model.Director</p>
+                <p>
+                    <a class="btn btn-dark btn-sm" href="/movies/details/@Model.MovieId" role="button">Daha fazlası...</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>

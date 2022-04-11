@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <!-- Bootstrap CSS çağırdık. Body'nin en atında da Bootstrap JS kütüphanesini çağırıyoruz. En alta bakabilrisin.'-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+</head>
+<body>
+    @* await Html.PartialAsync("_navbarPartial")  ESKİDEN BÖYLE AĞIRMIŞTIM Hala _navbarPartial.cshtml duruyor ancak kendi modeli olmasını istedim. *@
+    @await Component.InvokeAsync("NavBar")
+
+    @*Buraya gelecek header isimli section'u index'de jumbotron'u çağırmak için kullanıldı. Böylece sadece section olarak işaretlenen
+        içerikler bu kısımda görünecek ancak başka sayfalarda bu isimde bir section belirtilmediyse görünmeyecek.'
+        false değerini koymasaydık tüm sayfalara bri headersection metodu tanımlamamız gerekecekti ve hata alacaktık. Ancak şuan opsiyonel oldu.*@
+    @RenderSection("headerSection", false)
+
+
+    <div class="container-fluid mt-3 mb-3">
+
+        @if (IsSectionDefined("menuSection"))@* IsSectionDefined fonksiyonu. Bir renderbody içinde gelen sayfaya eğer bir section tanımlanmışsa ve adı munuSection ise
+            bu sectionu ilgili formatta render edecek tasarımı yapmamıza olanak sağlayan bir mantıksal operatör fonksiyonudur. Örneğin index sayfasında menu istiyoruz
+            bu yüzden index sayfasında bir menuSection tanımlandı. bu da section kullanımına farklı bir örnektir.*@
+        {
+            <div class="row">
+                <div class="col-md-3">
+                    @RenderSection("menuSection", false) @*Menu buraya gelecek*@
+
+                </div>
+                <div class="col-md-9">
+                    @RenderBody()
+                </div>
+            </div>
+
+        }
+        @*Eğer munuSection adında bir section sayfada tanımlanmamışsa direkt RenderBody olarak sayfayı render edecek.*@
+        else
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    @RenderBody()
+                </div>
+            </div>
+        }
+
+
+
+    </div>
+
+    @await Html.PartialAsync("_footerPartial")
+
+    <!--Bootsrap JavaScript kütüphanesini çağırdık:-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    @RenderSection("scripts", false)
+
+</body>
+</html>
+<script>
+
+
+</script>

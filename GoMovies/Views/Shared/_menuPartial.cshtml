@@ -1,0 +1,12 @@
+﻿@model List<Genre> 
+    @*Bu model değerini dışarıdan alır. Bu Partial'ın çağırıldığı sayfalar tarafından çağırırken ikinci parametre olarak Model değerini de gönderir'*@
+<div class="list-group">
+    <a href="#" class="list-group-item list-group-item-secondary list-group-item-action active">
+        Kategoriler
+    </a>
+    @foreach (var item in Model)
+    {
+        <a href="#" class="list-group-item list-group-item-action">@item.Name</a>
+    }
+         <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Üyelere Özel</a>
+</div>

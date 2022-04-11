@@ -1,0 +1,21 @@
+﻿@model List<RoleAssignViewModel>
+
+<h1>Kullanıcı Rol Atama İşlemleri</h1>
+<hr />
+<label class="mb-2"><strong>@TempData["UserName"]</strong> isimli kullanıcı için:</label>
+<br />
+<form asp-action="AssignRole" asp-controller="Role" method="post" >
+
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="form-check mb-2">
+            <input type="hidden" asp-for="@Model[i].RoleID" value="@Model[i].RoleID" />
+            <input type="hidden" asp-for="@Model[i].Name" value="@Model[i].Name" />
+            <input type="checkbox" asp-for="@Model[i].IsRoleAlreadyAssignedToUser" class="form-check-input" />
+            <label class="form-check-label" for="@Model[i].IsRoleAlreadyAssignedToUser">@Model[i].Name</label>
+        </div>
+    }
+    <button type="submit" class="btn btn-sm btn-warning">Kaydet</button>
+    <a class="btn btn-danger btn-sm" href="/User/ListUsers">İptal</a>
+
+</form>

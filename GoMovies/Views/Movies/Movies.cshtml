@@ -1,0 +1,52 @@
+﻿@model MoviesViewModel
+@*Moies/List actiona gider burası movies.cshtml sayfasıdır.*@
+<title>Film Listesi</title>
+
+@* bu styl.css i örnek olarak eklemiştin ancak sonradan kullanmama kararı aldık bunun yerine bootstrap kullanıyoruz
+    <link href="/css/style.css" rel="stylesheet" /> Burada wwwroot altındaki style css'i çağırarak aşağıdaki film listemizde bu classımızı kullandık.
+        wwwroot altındaki resim, js ve class kütüphanelerine ulaşmak için Startup.cs içerisinde
+        configürasyon olarak  app.UseStaticFiles(); fonksiyonunu çağırarak bu dizine erişimin statik dosyalara ulaşımı sağlamamız gerekiyor.
+        aksi taktirde statik dosyalara erişemez ve stiller veya resimler çalışmaz.'*@
+
+<h1>Film Listesi</h1>
+<div id="filmler">
+    @if (Model.Movies.Count() <= 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            Bu kategoriye ait bir film bulunmamaktadır.
+        </div>
+    }
+    else
+    {
+
+
+        @foreach (var item in Model.Movies)
+        {
+            @await Html.PartialAsync("_movieListPartial", item) @*Burada_movieListPartial ı çağırırken bu partial view'in kullanacağı Movies türündeki modeli
+                de item değişkeni ile tek tek gönderiyoruz. Ve ilgili partial view bu modeli kullanıp,
+                  ürettiği içeriği geri yolluyor.'*@
+        }
+
+
+    }
+</div>
+
+
+@*Aşağıdaki section içerisindeki değer Layoutta ilgili yere render edilecek. Sectionlar opsiyonel içerikleri çağırmak için kullanılır.*@
+
+@section menuSection {
+    @*  @await Html.PartialAsync("_menuPartial", Model.Genres)
+        Burada menuPartial View'i çağırdık çağırırken de kullanacağı modeli gönderdik. Ancak bu şekilde Partial Veiw olarak her yerde Menu'yü çağırırken her seferinde
+        modelini de göndermek ve bu modeli başka view'lerden munuPartial ı çağıracaksak oralardan da göndermek gerekiyordu. Tabi ilgili modellerin Controller'larından
+        da gönderilmesi gerekiyor bu şekilde çalışırsak. Bu sayfa birden fazla model barındırdığı için ek operasyon yaptık ve Yukarıda model olarak
+        MovieGenreViewModel'i içinde iki modeli birleştirip controllerdan öyle gönderdik. Aşağıda ise tüm bunların yerine viewComponent olarak çalışan bir
+        Menu sayfası tasarladık. Kendi modelini kendi alıyor. Ve istenen yerde model göndermeden hızlıca çağırılabiliyor :)'*@
+
+    @await Component.InvokeAsync("Genres")
+    @*Burada ilgili  Shared altındaki Genres ViewModeli çağırdık. Bu sayfa render ederek bu bölüme çağırılmış oldu. Artık model olarak Yukarıdaki gibi
+        MovieGenreViewModel modelini göndermeye gerek yok. Bu sayfaya bir tane model zaten yetiyor. Çünkü Kategoriler(Genre) Menüsünün bulunduğu
+            sayfamızı çlıştıran default.cshtml zaten modelini ilgili ViewComponents/GenreViewComponent.cs ten alıyor. Bu sayfaya ayrıca Genre Modeli
+        yollamaya gerek kalmadı. Ama yine de örnek olarak kalsın diye silmedim aynı modelden devam ettim.*@
+}
+
+

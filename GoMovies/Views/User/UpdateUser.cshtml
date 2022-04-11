@@ -1,0 +1,127 @@
+﻿@model UserUpdateViewModel
+
+<form asp-controller="User" asp-action="UpdateUser" method="post" autocomplete="on" enctype="multipart/form-data">
+
+    <div class="d-flex justify-content-center">
+
+
+        <div class="card mb-3 shadow-sm p-3  bg-white rounded" style="width: 40rem;">
+            <h3>Kullanıcı Güncelleme Formu</h3>
+            <hr />
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    @if (Model.ImageUrl != null)
+                    {
+                        <div class="text-center">
+                            <div class="img mb-2 mt-3"> <img src="/img/@Model.ImageUrl" alt="/@Model.ImageUrl" width="90" class="rounded-circle"> </div>
+                            <h5 class="mb-0">@Model.Name @Model.Surname</h5> <small>@Model.UserName</small>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <div class="mb-2">
+                            @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                            <label asp-for="Name"></label>
+                            @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                            <input asp-for="Name" class="form-control">
+                        </div>
+                        <div class="mb-2">
+                            @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                            <label asp-for="Surname"></label>
+                            @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                            <input asp-for="Surname" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center mb-2 mt-2">
+        <div class="ctext-muted shadow p-2 bg-white rounded ml-6 mr-6 mt-1 " style="width: 40rem;">
+
+            @* <form action="/movies/create" method="post" autocomplete="on"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class=" p-2 bg-danger text-white" asp-validation-summary="All"></div>
+
+            }
+            else
+            {
+
+                <div class="text-danger" asp-validation-summary="All"></div>
+            }
+
+            @if (ViewBag.UpdateSuccess == true)
+            {
+                <div class="p-2 mb-2 bg-success text-white">Bilgileriniz başarıyla güncellenmiştir.</div>
+            }
+
+            <input type="hidden" asp-for="existingUserName" class="form-control" />
+
+            <div class="mb-3">
+                @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <label asp-for="Mail"></label>
+                @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <input asp-for="Mail" class="form-control">
+            </div>
+            <div class="mb-3">
+                @*<label for="Title">Title</label> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <label asp-for="UserName"></label>
+                @*<input type="text" name="Title" class="form-control"> Önceden böyle kullanıyorduk  artık TagHelpers ile aşağıdaki gibi kullanacağız*@
+                <input asp-for="UserName" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Profil fotoğrafı seçiniz:</label>
+                <input type="file" name="fileImg" class="form-control" />
+            </div>
+
+
+            <div class="mb-2">
+                <label asp-for="CurrentPassword"> </label>
+                <input asp-for="CurrentPassword" class="form-control" />
+
+                @for (int i = 0; i < Model.RoleListModel.Count; i++)
+                {
+                    <div class="form-check mb-2">
+                        <input type="hidden" asp-for="@Model.RoleListModel[i].RoleID" value="@Model.RoleListModel[i].RoleID" />
+                        <input type="hidden" asp-for="@Model.RoleListModel[i].Name" value="@Model.RoleListModel[i].Name" />
+                        <input type="checkbox" asp-for="@Model.RoleListModel[i].IsRoleAlreadyAssignedToUser" class="form-check-input" />
+                        <label class="form-check-label" for="@Model.RoleListModel[i].IsRoleAlreadyAssignedToUser">@Model.RoleListModel[i].Name</label>
+                    </div>
+                }
+
+            </div>
+            <div class="mb-3 text-success"> Güncellemeleri onaylamak için güncel parolanızı giriniz.</div>
+            <div class="mb-3">
+                <button class="btn btn-dark">Güncelle</button>
+                <a class="btn btn-warning" href="/User/ListUsers">Kullanıcı Listesine Dön</a>
+
+            </div>
+            <hr />
+            <div class="p-1 mb-2 bg-light text-dark">
+                Parolanızı değiştirmek için aşağıdaki formu kullanınız
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-dark">Güncelle</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</form>
+
+

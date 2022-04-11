@@ -1,0 +1,118 @@
+﻿@model HomePageViewModel
+
+
+
+@section headerSection
+    {
+    @await Html.PartialAsync("_headerPartial") @*_headerPartial.cshtml çağırıldı.*@
+}
+
+
+
+
+
+<title>Home Index Sayfasıdır</title>
+
+@await Html.PartialAsync("_sliderPartial")
+
+<div class="d-flex justify-content-center mb-2 mt-3">
+    <!--  <h1>Home Index Safası</h1>-->
+    <br />
+    <h2>Popüler Filmler</h2>
+</div>
+
+<div id="filmler">
+
+    <div class="row row-cols-1 row-cols-md-3 mx-1">
+        @foreach (var movie in Model.PopularMovies.Take(9).Reverse())
+        {
+
+            <div class="card mb-2 mr-2">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img style='height:fit-content;' src="/img/@movie.imageUrl" class="card-img" alt="/img/@movie.Title">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h5 class="card-title mb-1">@movie.Title</h5>
+                            <small class="mb-1">Yönetmen: @movie.Director</small>
+
+
+                            @if (movie.Description == null)
+                            {
+                                movie.Description = "";
+                            }
+                            //eğer yorum değeri  140'dan fazla karaktere sahipse ve null değilse ve içinde =dan fazla boşluk varsa(yani birden fazla kelime varsa
+                            else if (movie.Description.Length > 140 && movie.Description != null && movie.Description.Substring(0, 140).LastIndexOf(" ") > 0)
+                            {
+                                //<p class="card-text" style="font-size:1vw;">
+                                <p class="card-text">
+                                    @Html.Raw(movie.Description.Substring(0, movie.Description.Substring(0, 140).LastIndexOf(" "))) ...
+                                </p>
+
+                            }
+                            else if (movie.Description != null && movie.Description.Length < 140)
+                            {
+                                <p class="card-text">
+                                    @Html.Raw(movie.Description)
+                                </p>
+                            }
+
+                            <p>
+                                <a class="btn btn-dark btn-sm" href="/movies/details/@movie.MovieId">Daha fazlası...</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        }
+    </div>
+
+
+
+
+
+
+    @*  @foreach (var movie in Model.PopularMovies)
+            {
+                @await Html.PartialAsync("_movieListPartial", movie)
+
+        <!--Burada_movieListPartial ı çağırırken bu partial view'in kullanacağı Movies türündeki modeli
+                    de Model olarak gönderiyoruz. Ve ilgili partial view bu modeli kullanıp,
+                      ürettiği içeriği geri yolluyor.'-->
+        }
+    *@
+
+
+</div>
+
+<style>
+    .nopadding {
+        padding: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin: 0 !important;
+    }
+
+    .example {
+        background-color: lightgrey;
+        padding: 20px;
+    }
+
+    @@media screen and (min-width: 601px) {
+        div.example {
+            font-size: 80px;
+        }
+    }
+
+    @@media screen and (max-width: 600px) {
+        div .example {
+            font-size: 30px;
+        }
+    }
+</style>
+

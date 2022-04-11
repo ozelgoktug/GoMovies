@@ -1,0 +1,84 @@
+﻿@model MoviesViewModel
+<strong>Film Güncelle</strong> (MovieAdminPanel/Edit Action Sayfası)
+<hr />
+<form action="/MovieAdminPanel/ListForEditing" method="get" class="form-inline mb-3">
+    <input type="text" class="form-control mr-sm-2 mb-2" name="q" placeholder="Güncellenecek filmi ara..." aria-label="Search">
+    <button type="submit" class="btn btn-dark mr-2">Ara</button>
+    <a class="btn btn-warning" href="/MovieAdminPanel/ListForEditing">Tüm Filmleri Getir</a>
+</form>
+
+<div class="d-flex justify-content-left">
+
+
+
+    <div class="ctext-muted align-middle shadow p-4 bg-white rounded ml-6 mr-6 mt-1 " style="width: 70rem;">
+
+        <div id="filmler">
+            @if (Model.Movies.Count() <= 0)
+            {
+                <div class="alert alert-warning" role="alert">
+                    Bu kategoriye ait bir film bulunmamaktadır.
+                </div>
+            }
+            else
+            {
+
+
+                @foreach (var item in Model.Movies)
+                {
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="/img/@item.imageUrl" class="card-img" alt="@item.Title">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">#@item.MovieId @item.Title</h5>
+
+                                    @if (item.Description == null)
+                                    {
+                                        item.Description = "";
+                                    }
+                                    //eğer yorum değeri  140'dan fazla karaktere sahipse ve null değilse ve içinde =dan fazla boşluk varsa(yani birden fazla kelime varsa
+                                    else if (item.Description.Length > 140 && item.Description != null && item.Description.Substring(0, 140).LastIndexOf(" ") > 0)
+                                    {
+                                        <p class="card-text">
+                                            @item.Description.Substring(0, item.Description.Substring(0, 140).LastIndexOf(" ")) ...
+                                        </p>
+
+                                    }
+                                    else if (item.Description != null && item.Description.Length < 140)
+                                    {
+                                        <p class="card-text">
+                                            @item.Description
+                                        </p>
+                                    }
+
+
+                                    <p class="card-text text-muted">Yönetmen: @item.Director</p>
+                                    <div>
+                                        <a class="btn btn-dark btn-sm mr-2" href="/movies/details/@item.MovieId" role="button">Daha fazlası...</a>
+                                        <a class="btn btn-warning btn-sm mr-2" href="/MovieAdminPanel/UpdateMovie/@item.MovieId" role="button">Güncelle</a>
+
+                                        <form asp-action="DeleteMovie" asp-controller="MovieAdminPanel" method="post" style="display:inline">
+                                            <input type="hidden" name="MovieId" value="@item.MovieId" />
+                                            <button class="btn btn-danger btn-sm mr-2" type="submit">Sil</button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                }
+
+
+            }
+        </div>
+    </div>
+
+</div>
+

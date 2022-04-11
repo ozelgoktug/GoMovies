@@ -1,0 +1,115 @@
+﻿
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger ">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home/index"><strong>GoMovies</strong></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item active">
+                    <a class="nav-link active" aria-current="page" href="/home/index">Ana Sayfa</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="/movies/list">Film Listesi</a>
+                </li>
+
+
+
+                @*@if (Model.Any(m => m.isOnline == true))*@
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Abonelere Özel</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Abonelere Özel</a>
+                    </li>
+                }
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="/home/about">Hakkımızda</a>
+                </li>
+
+            </ul>
+
+
+            @*@if (Model.Any(m => m.isOnline == true) && Model.FirstOrDefault(m => m.isOnline == true).UserRoleId == 0)*@
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <ul class="navbar-nav my-2 my-lg-0">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Admin Paneli
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item disabled" href="#">Filmler ve Türler</a></li>
+                            <li> <div class="dropdown-divider "></div></li>
+                            <li><a class="dropdown-item" href="/MovieAdminPanel/ListMovieAsTable">Filmler Tablosu</a></li>
+                            <li><a class="dropdown-item" href="/MovieAdminPanel/ListGenresAsTable">Türler Tablosu</a></li>
+                            <li><a class="dropdown-item" href="/MovieAdminPanel/ListForEditing">Film Güncelle</a></li>
+                            <li><a class="dropdown-item" href="/MovieAdminPanel/CreateMovie">Film Ekle</a></li>
+                           @*Artık kullanılmıyor <li><a class="dropdown-item" href="/MovieAdminPanel/CreateMovie2">Film Ekle2</a></li>*@
+
+                            <li><div class="dropdown-divider "></div></li>
+                            <li><a class="dropdown-item disabled" href="#">Kullanıcılar ve Roller</a></li>
+                            <li><div class="dropdown-divider "></div></li>
+                            <li><a class="dropdown-item" href="/Role/ListRoles">Rol Listesi</a></li>
+                            <li><a class="dropdown-item" href="/User/ListUsers">Kullanıcı Listesi</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            }
+
+
+            @*@if (Model.Any(m => m.isOnline == true))*@
+            @if (User.Identity.IsAuthenticated)
+            {
+                <ul class="navbar-nav my-2 my-lg-0">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @User.Identity.Name
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/Account/Logout">Çıkış</a>
+
+                            <form asp-action="UpdateAccount" asp-controller="Account" method="get">
+                                <input type="hidden" name="userName" value="@User.Identity.Name" />
+                                <button class="dropdown-item" type="submit">Hesap Ayarları</button>
+                            </form>
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item disabled " aria-disabled="true" href="#">GoMovies</a>
+                        </div>
+                    </li>
+
+                </ul>
+            }
+            else
+            {
+                <a href="/Account/Login" class="btn btn-outline-light ml-2 me-2 my-2 my-sm-0" type="submit">Giriş yap</a>
+
+            }
+
+            <form action="/movies/list" method="get" class="d-flex my-2 my-lg-0">
+                <input type="text" class="form-control me-sm-2" name="q" placeholder="Film ara..." aria-label="Ara">
+                <button type="submit" class="btn btn-outline-light my-2 my-sm-0">Ara</button>
+                &nbsp;
+            </form>
+
+
+        </div>
+    </div>
+</nav>
